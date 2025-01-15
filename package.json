@@ -6,6 +6,7 @@
     "start": "NODE_ENV=local ts-node ./index.ts",
     "dev": "pnpm run build && NODE_ENV=development node ./dist/index.js",
     "prod": "pnpm run build && NODE_ENV=production node ./dist/index.js",
+    "generateDoc": "ts-node app/swagger/swagger.ts",
     "build": "npx tsc",
     "lint": "eslint . --ext .ts,.js --max-warnings=0",
     "lint:fix": "eslint --fix --ext .js,.ts .",
@@ -29,6 +30,7 @@
     "@types/http-errors": "^2.0.4",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/morgan": "^1.9.4",
+    "@types/multer": "^1.4.12",
     "@types/node": "^22.10.6",
     "@types/nodemailer": "^6.4.8",
     "@types/passport": "^1.0.12",
@@ -58,6 +60,7 @@
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.8.0",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.16",
     "nodemon": "^3.0.1",
     "passport": "^0.6.0",
@@ -65,6 +68,8 @@
     "passport-local": "^1.0.0",
     "qrcode": "^1.5.4",
     "smtp-connection": "^4.0.2",
-    "speakeasy": "^2.0.0"
+    "speakeasy": "^2.0.0",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
   }
 }

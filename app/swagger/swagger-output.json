@@ -1,0 +1,273 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API Documentation",
+    "description": "Comprehensive documentation for Admin and User API endpoints."
+  },
+  "host": "localhost:5000",
+  "basePath": "/api",
+  "schemes": ["http"],
+  "paths": {
+    "/admin": {
+      "get": {
+        "summary": "Get all admins",
+        "description": "Fetch a list of all administrators.",
+        "responses": {
+          "200": {
+            "description": "List of admins retrieved successfully."
+          }
+        }
+      },
+      "post": {
+        "summary": "Create an admin",
+        "description": "Add a new administrator.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Admin"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Admin created successfully."
+          }
+        }
+      }
+    },
+    "/admin/{id}": {
+      "get": {
+        "summary": "Get admin by ID",
+        "description": "Fetch details of a specific administrator by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Admin details retrieved successfully."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete admin",
+        "description": "Remove an administrator by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Admin deleted successfully."
+          }
+        }
+      },
+      "put": {
+        "summary": "Update admin",
+        "description": "Update all details of an administrator by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Admin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Admin updated successfully."
+          }
+        }
+      },
+      "patch": {
+        "summary": "Partially update admin",
+        "description": "Update specific details of an administrator by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Admin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Admin partially updated successfully."
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "summary": "Get all users",
+        "description": "Fetch a list of all users.",
+        "responses": {
+          "200": {
+            "description": "List of users retrieved successfully."
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a user",
+        "description": "Add a new user.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User created successfully."
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "summary": "Get user by ID",
+        "description": "Fetch details of a specific user by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details retrieved successfully."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user",
+        "description": "Remove a user by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully."
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user",
+        "description": "Update all details of a user by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated successfully."
+          }
+        }
+      },
+      "patch": {
+        "summary": "Partially update user",
+        "description": "Update specific details of a user by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User partially updated successfully."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Admin": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "password": { "type": "string" }
+      },
+      "required": ["name", "email", "password"]
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "number" },
+        "age": { "type": "number" },
+        "qualification": { "type": "string" },
+        "kycDocument": { "type": "string" },
+        "accessToken": { "type": "string" },
+        "refToken": { "type": "string" },
+        "active": { "type": "boolean" },
+        "factorAuthenticate": { "type": "boolean" },
+        "password": { "type": "string" }
+      },
+      "required": ["name", "email", "password", "active", "factorAuthenticate"]
+    }
+  }
+}

@@ -84,6 +84,12 @@ export const editUser = asyncHandler(async (req: Request, res: Response) => {
   res.send(createResponse(result, "User updated sucssefully"));
 });
 
+export const docUpload = asyncHandler(async (req: Request, res: Response) => {
+  console.log(req.file)
+  const result = await userService.editUser(req.params.id, {"kycDocument": "/uploads/"+req.file});
+  res.send(createResponse(req, "User updated sucssefully"));
+});
+
 export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
   const result = await userService.deleteUser(req.params.id);
   res.send(createResponse(result, "User deleted sucssefully"));
