@@ -1,4 +1,3 @@
-
 import { Router } from "express";
 import { catchError } from "../../common/middleware/cath-error.middleware";
 import * as AdminController from "./admin.controller";

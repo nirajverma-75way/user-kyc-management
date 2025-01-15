@@ -8,10 +8,14 @@ const router = Router();
 
 router
         .get("/", userController.getAllUser)
+        .get("/active", userController.getAllActiveUser)
+        .get("/mail/pending-user", userController.sendMailPendingUser)
+        .get("/pending/:type", userController.getPendingUser)
         .get("/:id", userController.getUserById)
         .delete("/:id", userController.deleteUser)
         .post("/", userValidator.createUser, catchError, userController.createUser)
-        .put("/set-password/:token",  catchError, userController.setPassword)
+        .post("/login", userValidator.loginUser, catchError, userController.loginUser)
+        .patch("/set-password/:token", userValidator.setPassword, catchError, userController.setPassword)
         .put("/:id", userValidator.updateUser, catchError, userController.updateUser)
         .patch("/:id", userValidator.editUser, catchError, userController.editUser)
 

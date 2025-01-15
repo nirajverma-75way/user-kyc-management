@@ -9,11 +9,16 @@ import * as userService from "../../api/user/user.service";
 import { type Request } from "express";
 import { type IAdmin } from "../../api/admin/admin.dto";
 import { type IUser } from "../../api/user/user.dto";
+const speakeasy = require('speakeasy');
+const qrcode = require('qrcode');
+
 
 const isValidPassword = async function (value: string, password: string) {
   const compare = await bcrypt.compare(value, password);
   return compare;
 };
+
+const secret = speakeasy.generateSecret({ length: 20 });
 
 export const initPassport = (): void => {
   passport.use(
@@ -75,8 +80,9 @@ export const initPassport = (): void => {
       {
         usernameField: "email",
         passwordField: "password",
+        passReqToCallback: true
       },
-      async (email, password, done) => {
+      async (req, email, password, done) => {
         try {
           const user = await userService.getUserByEmail(email);
           if (user == null) {
@@ -85,7 +91,7 @@ export const initPassport = (): void => {
           }
 
           if (!user.active) {
-            done(createError(401, "User is inactive"), false);
+            done(createError(401, "User is inactive, Contact to Admin"), false);
             return;
           }
 
@@ -97,7 +103,36 @@ export const initPassport = (): void => {
             done(createError(401, "Create Password before login"), false);
             return;
           }
+
+          // Two Factor Authentication
+          if(user.factorAuthenticate){
+            if(!req.body.code){
+              const qr = await generateQR();
+              done(null, qr, {message: "qrCode"});
+              
+            return;
+            }
+            else{
+              const userToken = req.body.code; // OTP entered by the user
+              console.log(userToken);
+              const verified = speakeasy.totp.verify({
+                secret: secret.base32,
+                encoding: 'base32',
+                token: userToken,
+                //window: 1, // Allow a time window of 1 unit (default is 0)
+              });
+
+              if (!verified) {
+                console.log("verify token "+verified)
+                done(createError(401, "Invalid code"), false);
+                return;
+              }
+            }
+          }
+
+
           const validate = await isValidPassword(password, user.password);
+          console.log(validate)
           if (!validate) {
             done(createError(401, "Invalid email or password"), false);
             return;
@@ -118,6 +153,10 @@ export const createUserTokens = (user: Omit<IUser | IAdmin, "password">) => {
   const refToken = jwt.sign(user, jwtSecret,{expiresIn: '5d'});
   return { accessToken: token, refreshToken: refToken };
 };
+
+export const generateQR = () =>{
+  return qrcode.toDataURL(secret.otpauth_url);
+}
 
 export const decodeToken = (token: string) => {
   // const jwtSecret = process.env.JWT_SECRET ?? "";

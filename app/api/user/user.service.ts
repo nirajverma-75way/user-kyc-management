@@ -38,9 +38,26 @@ export const getUserById = async (id: string) => {
 export const getAllUser = async () => {
     const result = await UserSchema.find({}).lean();
     return result;
+}
+;export const getPendingUser = async (filter: {}) => {
+    const result = await UserSchema.find(filter).lean();
+    return result;
+};
+export const getAllActiveUser = async () => {
+    const result = await UserSchema.find({active: true}).lean();
+    return result;
 };
 export const getUserByEmail = async (email: string) => {
     const result = await UserSchema.findOne({ email }).lean();
+    return result;
+}
+export const getUseByDateFilterr = async (start: Date, end: Date) => {
+    const result = await UserSchema.find({
+        createdAt: {
+          $gte: start, // Greater than or equal to start date
+          $lte: end,   // Less than or equal to end date
+        },
+      }).lean();
     return result;
 }
 
